@@ -4,3 +4,4 @@ numpy==1.21.5
 matplotlib==3.5.1
 seaborn==0.11.2
 pywaffle==1.1.0
+openpyxl==3.0.9
