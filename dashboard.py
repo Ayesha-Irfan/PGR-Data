@@ -1,11 +1,10 @@
-import plotly.express as px
 import streamlit as st
-import xlrd
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pywaffle import Waffle
+import plotly.express as px
 
 df = pd.read_excel('PGR_Finance_Preliminary_400_anon.xlsx')
 
