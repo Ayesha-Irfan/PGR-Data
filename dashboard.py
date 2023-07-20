@@ -6,9 +6,9 @@ import seaborn as sns
 from pywaffle import Waffle
 import plotly.express as px
 
-df = pd.read_excel('PGR_Finance_Preliminary_400_anon.xlsx')
+df = pd.read_excel('PGR_Finance_Data.xlsx')
 
-st.set_page_config(page_title="PGR Data Dashboard", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="Explore The Data", page_icon=":chart_with_upwards_trend:", layout="wide")
 
 st.sidebar.header('Filter below to see how gender, course and mode of study affect the financial circumstance of the average PhD student:')
 Gender = st.sidebar.multiselect("Select the gender:",
@@ -46,7 +46,7 @@ else:
 
 average_foodcost = 194
 
-st.title(':bar_chart: PGR Data Dashboard')
+st.title(':clipboard: Explore The Data')
 st.markdown('##')
 
 considered_withdrawing = [n for n in df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?'] if str(n) != 'nan']
@@ -84,7 +84,6 @@ second_job = [n for n in df_selection['In the current academic year (2022/23), h
 #spending_df = pd.DataFrame({'Left': (average_salary-(bills + rent)), 'Bills': bills, 'Rent': rent})
 reds = ['rgb(214,96,77)','rgb(253,219,199)', 'rgb(244,165,130)',  'rgb(229,131,104)', 'rgb(255,195,143)' ]
 #lighter_reds = reds.remove('rgb(178,24,43)')
-print('REDS', reds)
 fig4 = px.pie(spending_df, values='Count', names='Groups', color_discrete_sequence=reds)
 st.plotly_chart(fig4)
 
@@ -123,10 +122,6 @@ fig0 = plt.figure(FigureClass=Waffle, rows=2, columns = 12,
 fig0.axes[0].get_legend().remove()
 
 st.pyplot(fig0, use_container_width=True)
-
-
-print('LEN', len(considered_withdrawing))
-#print(considered_withdrawing.count(1.0)/len(considered_withdrawing), 'considered withdrawing')
 st.subheader('On average, ' + '**' + str(int(round(considered_withdrawing.count(1.0)/len(considered_withdrawing), 2)*100)) + '%** ' + 'of PhD students have seriously considered :red[withdrawing] from their studies.')
 st.subheader( 'Out of these students, **' + str(int(round(len(finance_withdrawing)/len(withdrawing_df), 2)*100)) + '%' +  '** of these students stated that they were considering withdrawing due to their :red[financial situation].')
 
@@ -136,8 +131,6 @@ average_rating = round(df_selection['IMPORTANCE_OF_JOB'].mean(), 2)
 neater_df = pd.DataFrame({'Rating': importance_of_job['REDACTED'].index.values, 'Count': importance_of_job['REDACTED'].values})
 fig = px.bar(neater_df, x="Rating", y="Count", color="Rating", barmode="relative")
 fig.update_traces(marker_color='#E53935', marker_line_color='rgb(38,35,35)', marker_line_width=0.05, opacity=0.7)
-#print(importance_of_job['REDACTED']) 
-#print('HELO', neater_df['Rating'][3])
 #fig1 = px.bar(neater_df, x="Rating", y="Count"),
 st.subheader(str(int((second_job.count(1.0)/total_students)*100)) + '% students supplement their income with a second job. The average student works ' + str(hours_worked) + ' additional hours per week during term-time on top of their PhD.')
 
@@ -167,7 +160,6 @@ for i in range(len(reasons_labels)):
     reasons_dict.update({reasons_labels[i]: reasons_count[i]})
 #descending_dict = sorted(reasons_dict, reverse=True)
 sorted_dict = dict(sorted(reasons_dict.items(), key=lambda x:x[1], reverse=True))
-print('LISTSSSS', sorted_dict.keys, sorted_dict.values)
 
 reasons_df = pd.DataFrame({'Motivation': sorted_dict.keys(), 'Count': sorted_dict.values()})
 
@@ -218,4 +210,16 @@ st.plotly_chart(fig3)
 #st.bar_chart(importance_of_job['REDACTED'].values)
 fig2 = px.line(neater_df2, x="Hours", y="Count", render_mode="svg", color_discrete_sequence=px.colors.sequential.RdBu)
 st.plotly_chart(fig2)
-st.subheader('Over 50' + '%' + ' of PhD students work 15 or more hours on top of their PhD hours. Nearly 25' + '%' + 'work a full-time job alongside their PhD.')
+st.subheader('Over 50' + '%' + ' of PhD students work 15 or more hours on top of their PhD hours. Nearly 25' + '%' + ' work a full-time job alongside their PhD.')
+
+st.markdown('---')
+
+l_column, r_column = st.columns(2)
+with l_column: 
+    st.subheader('Students included in this demographic: ')
+    st.subheader(f"{total_students:,}")
+with r_column: 
+    st.subheader('Total students included in study:')
+    st.subheader("503")
+
+st.markdown('---')
