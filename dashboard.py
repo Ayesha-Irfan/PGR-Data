@@ -50,8 +50,6 @@ st.title(':clipboard: Explore The Data')
 st.markdown('##')
 
 considered_withdrawing = [n for n in df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?'] if str(n) != 'nan']
-#cause_withdrawing = df[df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?'] == '1.0']
-#attempt = df.loc[df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?'] == 1.0]
 withdrawing_df = df_selection.loc[(df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?']) == 1.0]
 finance_withdrawing = df_selection.loc[((df_selection['Have you seriously considered withdrawing from the University at any stage during the current 2022/23 academic year?']) == 1.0) & (df_selection['Was this primarily or partly for financial reasons?'].isin(['Partly financial', 'Primarily financial']))]
 
@@ -81,7 +79,6 @@ st.subheader('Spending Breakdown')
 spending_labelled = ['Remaining', 'Money spent on rent', 'Money spent on bills', 'Money spent on food']
 spending_df = pd.DataFrame({'Groups': spending_labelled, 'Count': [(average_salary-(bills + rent + average_foodcost)), rent, bills, average_foodcost]})   
 second_job = [n for n in df_selection['In the current academic year (2022/23), have you undertaken any employment to supplement your income?'] if str(n) != 'nan']     
-#spending_df = pd.DataFrame({'Left': (average_salary-(bills + rent)), 'Bills': bills, 'Rent': rent})
 reds = ['rgb(214,96,77)','rgb(253,219,199)', 'rgb(244,165,130)',  'rgb(229,131,104)', 'rgb(255,195,143)' ]
 #lighter_reds = reds.remove('rgb(178,24,43)')
 fig4 = px.pie(spending_df, values='Count', names='Groups', color_discrete_sequence=reds)
@@ -92,9 +89,7 @@ if average_pay < 0:
     st.subheader('Therefore, the average PhD student is £' + str(np.absolute(average_pay)) + ' short per month, they need supplementary income just to pay for their bills, rent and food.')
 else: 
     st.subheader('Therefore, the average PhD student has just £' + str(average_pay) + ' left over per month after paying for their bills, rent and for food.')
-#df = [rent, bills, (1470-(rent+bills))]
-#fig = px.pie(df, names=['rent', 'bills', 'other'])
-#fig.show()#
+
 st.markdown("---")
 #WAFFLE DIAGRAM
 lith_dict = {'LITH': ['Considered', 'Did not consider'],
@@ -114,8 +109,7 @@ fig0 = plt.figure(FigureClass=Waffle, rows=2, columns = 12,
                 icons='person',
                 font_size='20',
                  starting_location='NW',
-                     #interval_ratio_x=0.1,
-    #interval_ratio_y=0.2,
+      
     block_aspect_ratio=1.2
                  )
 
