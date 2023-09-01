@@ -31,9 +31,13 @@ CDT = st.sidebar.multiselect("Select whether you would like to include CDT stude
                                 options=[n for n in df['CDT'].unique() if str(n) != 'nan'],
                                 default=[n for n in df['CDT'].unique() if str(n) != 'nan'],)
 
+df['Disability'].fillna('Disability', inplace=True)
+Disability = st.sidebar.multiselect("Select to include students with disabilities:",
+                                options=[n for n in df['Disability'].unique() if str(n) != 'nan'],
+                                default=[n for n in df['Disability'].unique() if str(n) != 'nan'],)
 
 
-df_selection = df.query("Gender == @Gender & Mode == @Mode & Home_International == @Home_International & Dependents == @Dependents & CDT == @CDT")
+df_selection = df.query("Gender == @Gender & Mode == @Mode & Home_International == @Home_International & Dependents == @Dependents & CDT == @CDT & Disability == @Disability")
 
 average_salary = 0
 
